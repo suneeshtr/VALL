@@ -86,6 +86,10 @@
     <color name="black_transparent_30">#30000000</color>
     <color name="black_transparent_50">#50000000</color>
     <color name="white_transparent_80">#80FFFFFF</color>
+    <string name="title_activity_sign_up">Sign Up</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
 
 
 </resources>

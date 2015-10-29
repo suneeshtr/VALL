@@ -73,7 +73,7 @@ public class OpponentsActivity extends BaseActivity implements View.OnClickListe
 
         if (users == null) {
             List<String> tags = new LinkedList<>();
-            tags.add("webrtcusers");
+            tags.add("webrtcusersts");
             QBUsers.getUsersByTags(tags, requestBuilder, new QBEntityCallback<ArrayList<QBUser>>() {
                 @Override
                 public void onSuccess(ArrayList<QBUser> qbUsers, Bundle bundle) {

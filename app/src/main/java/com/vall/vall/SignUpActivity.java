@@ -19,9 +19,9 @@ import io.fabric.sdk.android.Fabric;
 /**
  * Created by tereha on 25.01.15.
  */
-public class LoginActivity extends BaseActivity {
+public class SignUpActivity extends BaseActivity {
 
-    private static final String TAG = LoginActivity.class.getSimpleName();
+    private static final String TAG = SignUpActivity.class.getSimpleName();
     private ProgressDialog progressDialog;
     private boolean isWifiConnected;
 
@@ -62,7 +62,7 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 if (isWifiConnected) {
-                    Intent i = new Intent(LoginActivity.this, SignUp.class);
+                    Intent i = new Intent(SignUpActivity.this, SignUp.class);
                     startActivity(i);
                     finish();
                 } else {
@@ -77,7 +77,7 @@ public class LoginActivity extends BaseActivity {
         progressDialog = new ProgressDialog(this) {
             @Override
             public void onBackPressed() {
-                Toast.makeText(LoginActivity.this, getString(R.string.wait_until_login_finish), Toast.LENGTH_SHORT).show();
+                Toast.makeText(SignUpActivity.this, getString(R.string.wait_until_login_finish), Toast.LENGTH_SHORT).show();
             }
         };
         progressDialog.setMessage(getString(R.string.processes_login));
@@ -95,7 +95,7 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void startOpponentsActivity(){
-        Intent intent = new Intent(LoginActivity.this, OpponentsActivity.class);
+        Intent intent = new Intent(SignUpActivity.this, OpponentsActivity.class);
         startActivity(intent);
     }
 
