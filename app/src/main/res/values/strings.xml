@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">VALL</string>
+    <string name="app_name">Vall</string>
     <string name="action_log_out">Log out</string>
     <string name="login_as">Login as</string>
     <string name="logged_in_as">Logged In as</string>
@@ -90,6 +90,10 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+
+    <string name="title_activity_fullscreen">FullscreenActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 
 
 </resources>
