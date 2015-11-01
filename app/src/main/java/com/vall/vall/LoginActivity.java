@@ -2,6 +2,7 @@ package com.vall.vall;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -41,8 +42,20 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void signIn() {
+        SharedPreferences settings = getSharedPreferences("login", 0);
         final EditText user = (EditText) findViewById(R.id.input_email);
         final EditText pw = (EditText) findViewById(R.id.input_password);
+
+        if (settings != null)
+        {
+            String login = settings.getString("user", "");
+            String password = settings.getString("pws", "");
+            user.setText(login);
+            pw.setText(password);
+            initProgressDialog();
+            startIncomeCallListenerService(login, password, Consts.LOGIN);
+        }
+
         Button sign_in = (Button) findViewById(R.id.btn_login);
         final TextView sign_up = (TextView) findViewById(R.id.link_signup);
         sign_in.setOnClickListener(new View.OnClickListener() {

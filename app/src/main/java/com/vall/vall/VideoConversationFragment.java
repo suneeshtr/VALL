@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ToggleButton;
 
@@ -110,14 +109,14 @@ public class VideoConversationFragment extends BaseConversationFragment implemen
         DisplayMetrics displaymetrics = new DisplayMetrics();
         displaymetrics.setToDefaults();
 
-        ViewGroup.LayoutParams layoutParams = imgMyCameraOff.getLayoutParams();
+//        ViewGroup.LayoutParams layoutParams = imgMyCameraOff.getLayoutParams();
 
-        layoutParams.height = localVideoView.getHeight();
-        layoutParams.width = localVideoView.getWidth();
+//        layoutParams.height = localVideoView.getHeight();
+//        layoutParams.width = localVideoView.getWidth();
+//
+//        imgMyCameraOff.setLayoutParams(layoutParams);
 
-        imgMyCameraOff.setLayoutParams(layoutParams);
-
-        Log.d(TAG, "Width is: " + imgMyCameraOff.getLayoutParams().width + " height is:" + imgMyCameraOff.getLayoutParams().height);
+//        Log.d(TAG, "Width is: " + imgMyCameraOff.getLayoutParams().width + " height is:" + imgMyCameraOff.getLayoutParams().height);
 
         if (SessionManager.getCurrentSession() != null) {
             SessionManager.getCurrentSession().setVideoEnabled(isNeedEnableCam);

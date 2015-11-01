@@ -21,6 +21,7 @@ import com.quickblox.users.QBUsers;
 import com.quickblox.users.model.QBUser;
 
 import java.util.List;
+import java.util.Random;
 
 
 public class SignUp extends BaseActivity {
@@ -33,22 +34,44 @@ public class SignUp extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
+        getSupportActionBar().setTitle(" Sign Up");
         QBSettings.getInstance().fastConfigInit(Consts.APP_ID, Consts.AUTH_KEY, Consts.AUTH_SECRET);
+
+        final int OTP_CODE = gen();
 
         final EditText ph = (EditText) findViewById(R.id.input_email);
         final EditText pw = (EditText) findViewById(R.id.input_password);
         final EditText user = (EditText) findViewById(R.id.input_name);
+        final EditText otp = (EditText) findViewById(R.id.input_otp);
         TextView sign_in = (TextView) findViewById(R.id.link_login);
+        TextView get_otp = (TextView) findViewById(R.id.link_otp);
         Button sign_up = (Button) findViewById(R.id.btn_signup);
+
+        get_otp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isWifiConnected ) {
+                    String args = ph.getText().toString();
+                    new SendSms();
+                    Toast.makeText(getApplicationContext(), "generated code" + OTP_CODE, Toast.LENGTH_SHORT).show();
+                } else {
+                    showToast(R.string.internet_not_connected);
+                }
+            }
+        });
 
         sign_up.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isWifiConnected) {
-                    pws = pw.getText().toString();
-                    usr = ph.getText().toString();
-                    name = user.getText().toString();
-                    QbAuthe();
+                if (isWifiConnected ) {
+                    if (Integer.parseInt(otp.getText().toString()) == OTP_CODE){
+                        pws = pw.getText().toString();
+                        usr = ph.getText().toString();
+                        name = user.getText().toString();
+                        initProgressDialog();
+                        QbAuthe();
+                    }else Toast.makeText(getApplicationContext(), "Incorrect OTP", Toast.LENGTH_SHORT).show();
+
                 } else {
                     showToast(R.string.internet_not_connected);
                 }
@@ -63,6 +86,23 @@ public class SignUp extends BaseActivity {
             }
         });
 
+    }
+
+    public int gen() {
+        Random r = new Random( System.currentTimeMillis() );
+        return (1 + r.nextInt(2)) * 10000 + r.nextInt(10000);
+    }
+
+    private void initProgressDialog() {
+        progressDialog = new ProgressDialog(this) {
+            @Override
+            public void onBackPressed() {
+                Toast.makeText(SignUp.this, getString(R.string.wait_until_login_finish), Toast.LENGTH_SHORT).show();
+            }
+        };
+        progressDialog.setMessage(getString(R.string.processes_login));
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.show();
     }
 
     private void QbAuthe() {

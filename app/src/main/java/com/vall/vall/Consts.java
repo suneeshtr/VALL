@@ -1,9 +1,9 @@
 package com.vall.vall;
 
 public class Consts {
-    public static final String APP_ID = "30262";
-    public static final String AUTH_KEY = "PdTAhAr5MwsKMxV";
-    public static final String AUTH_SECRET = "y-CZjjLObAS6ZS-";
+    public static final String APP_ID = "30362";
+    public static final String AUTH_KEY = "q3bAMLeaMutQjkc";
+    public static final String AUTH_SECRET = "tK5kA5hnnfujjqY";
 
     public static final int NOTIFICATION_FORAGROUND = 1004;
     public static final int NOTIFICATION_CONNECTION_LOST = 1005;

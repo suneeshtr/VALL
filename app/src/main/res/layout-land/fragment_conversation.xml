@@ -80,7 +80,6 @@
         android:gravity="center_vertical"
         android:scaleType="centerCrop"
         android:visibility="invisible"
-        android:layout_toLeftOf="@+id/camerasOpponentsListLand"
         android:src="@drawable/ic_user_camera_off"/>
 
     <ToggleButton

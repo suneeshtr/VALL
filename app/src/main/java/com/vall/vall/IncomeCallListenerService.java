@@ -181,6 +181,12 @@ public class IncomeCallListenerService extends Service implements QBRTCClientSes
                             @Override
                             public void onSuccess() {
                                 Log.d(TAG, "onSuccess login to chat");
+                                SharedPreferences settings = getSharedPreferences("login", 0);
+                                SharedPreferences.Editor editor = settings.edit();
+                                editor.putString("user", login);
+                                editor.putString("pws", password);
+                                // Commit the edits!
+                                editor.commit();
                                 startActionsOnSuccessLogin(login, password);
                             }
 
@@ -255,6 +261,8 @@ public class IncomeCallListenerService extends Service implements QBRTCClientSes
     public void onDestroy() {
         try {
             QBChatService.getInstance().logout();
+            SharedPreferences settings = getSharedPreferences("login", 0);
+            settings.edit().clear().commit();
         } catch (SmackException.NotConnectedException e) {
             e.printStackTrace();
         }

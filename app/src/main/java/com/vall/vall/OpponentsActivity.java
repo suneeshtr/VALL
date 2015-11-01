@@ -2,9 +2,12 @@ package com.vall.vall;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -73,8 +76,34 @@ public class OpponentsActivity extends BaseActivity implements View.OnClickListe
 
         if (users == null) {
             List<String> tags = new LinkedList<>();
-            tags.add("webrtcusersts");
-            QBUsers.getUsersByTags(tags, requestBuilder, new QBEntityCallback<ArrayList<QBUser>>() {
+            ContentResolver cr = getContentResolver();
+            Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI,
+                    null, null, null, null);
+
+            if(cur.getCount()>0)
+
+            {
+                while (cur.moveToNext()) {
+                    String id = cur.getString(cur.getColumnIndex(ContactsContract.Contacts._ID));
+                    if (Integer.parseInt(cur.getString(cur.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER))) > 0) {
+
+                        // get the phone number
+                        Cursor pCur = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,
+                                ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?",
+                                new String[]{id}, null);
+                        while (pCur.moveToNext()) {
+                            String phone = pCur.getString(
+                                    pCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                            phone = phone.replaceAll("\\s","");
+                            String usr = phone.length() > 10 ? phone.substring(phone.length() - 10) : phone;
+                            tags.add(usr);
+                        }
+                        pCur.close();
+
+                    }
+                }
+            }
+            QBUsers.getUsersByLogins(tags, requestBuilder, new QBEntityCallback<ArrayList<QBUser>>() {
                 @Override
                 public void onSuccess(ArrayList<QBUser> qbUsers, Bundle bundle) {
                     ArrayList<QBUser> orderedUsers = reorderUsersByName(qbUsers);
@@ -122,20 +151,20 @@ public class OpponentsActivity extends BaseActivity implements View.OnClickListe
     private void prepareUserList(ListView opponentsList, List<QBUser> users) {
         QBUser currentUser = QBChatService.getInstance().getUser();
 
-        ArrayList <QBUser> nonAppUsers = new ArrayList<>();
-        for (QBUser nonAppUser : users){
-            if (!DataHolder.getIdsAiiUsers().contains(nonAppUser.getId())){
-                nonAppUsers.add(nonAppUser);
-            }
-        }
+//        ArrayList <QBUser> nonAppUsers = new ArrayList<>();
+//        for (QBUser nonAppUser : users){
+//            if (!DataHolder.getIdsAiiUsers().contains(nonAppUser.getId())){
+//                nonAppUsers.add(nonAppUser);
+//            }
+//        }
 
         if (users.contains(currentUser)) {
             users.remove(currentUser);
         }
 
-        if (users.containsAll(nonAppUsers)) {
-            users.removeAll(nonAppUsers);
-        }
+//        if (users.containsAll(nonAppUsers)) {
+//            users.removeAll(nonAppUsers);
+//        }
 
         // Prepare users list for simple adapter.
         opponentsAdapter = new OpponentsAdapter(this, users);

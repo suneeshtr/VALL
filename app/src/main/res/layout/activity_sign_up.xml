@@ -56,7 +56,33 @@
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
                 android:hint="Password"/>
-        </android.support.design.widget.TextInputLayout>
+        </android.support.design.widget.TextInputLayout><!-- Password Label -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="120dp"
+                android:id="@+id/input_des"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp">
+                <EditText android:id="@+id/input_otp"
+                    android:layout_width="match_parent"
+                    android:gravity="center"
+                    android:layout_height="wrap_content"
+                    android:inputType="phone"
+                    android:hint="OTP"/>
+            </android.support.design.widget.TextInputLayout>
+            <TextView android:id="@+id/link_otp"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Get OTP"
+                android:textColor="@color/blue"
+                android:gravity="center"
+                android:textSize="20dip"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/input_des" />
+        </RelativeLayout>
 
         <!-- Signup Button -->
         <Button
