@@ -13,7 +13,6 @@
         android:layout_height="wrap_content"
         android:id="@+id/opponentsList"
         android:layout_gravity="center_horizontal"
-        android:layout_below="@+id/selectUsertextView"
         android:layout_above="@+id/linearLayout"/>
 
 
